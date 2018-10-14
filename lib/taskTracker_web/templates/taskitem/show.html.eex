@@ -1,0 +1,33 @@
+<h1>Show Taskitem</h1>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @taskitem.title %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @taskitem.description %>
+  </li>
+
+  <li>
+    <strong>Complete:</strong>
+    <%= @taskitem.complete %>
+  </li>
+
+  <li>
+    <strong>Timespent:</strong>
+    <%= @taskitem.timespent %>
+  </li>
+
+  <li>
+    <strong>Assignedto:</strong>
+    <%= @taskitem.assignedto %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.taskitem_path(@conn, :edit, @taskitem) %></span>
+<span><%= link "Back", to: Routes.taskitem_path(@conn, :index) %></span>

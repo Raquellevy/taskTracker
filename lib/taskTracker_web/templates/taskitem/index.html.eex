@@ -1,0 +1,34 @@
+<h1>Listing Taskitems</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Complete</th>
+      <th>Timespent</th>
+      <th>Assignedto</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for taskitem <- @taskitems do %>
+    <tr>
+      <td><%= taskitem.title %></td>
+      <td><%= taskitem.description %></td>
+      <td><%= taskitem.complete %></td>
+      <td><%= taskitem.timespent %></td>
+      <td><%= taskitem.assignedto %></td>
+
+      <td>
+        <%= link "Show", to: Routes.taskitem_path(@conn, :show, taskitem), class: "btn btn-secondary" %>
+        <%= link "Edit", to: Routes.taskitem_path(@conn, :edit, taskitem), class: "btn btn-info"%>
+        <%= link "Delete", to: Routes.taskitem_path(@conn, :delete, taskitem), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger"%>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Taskitem", to: Routes.taskitem_path(@conn, :new), class: "btn btn-primary" %></span>

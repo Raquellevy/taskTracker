@@ -1,0 +1,5 @@
+<h1>Edit Taskitem</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.taskitem_path(@conn, :update, @taskitem)) %>
+
+<span><%= link "Back", to: Routes.taskitem_path(@conn, :index) %></span>
