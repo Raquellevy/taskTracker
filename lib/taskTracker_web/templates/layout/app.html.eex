@@ -11,16 +11,28 @@
      <div class="container">
       <nav class="navbar navbar-expand-sm navbar-light bg-white">
         <div class="col-4">
-          <a class="navbar-brand" href="#">Task Tracker</a>
+          <a class="navbar-brand" href="/..">Task Tracker</a>
         </div>
         <div class="col-8">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/taskitems">Tasks</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/users">Users</a>
-            </li>
+            <div>
+              <a class="nav-link" href="/taskitems">My Tasks</a>
+            </div>
+              <div class="col-4">
+                <%= if @current_user do %>
+                  <p class="my-3">
+                    User: <%= @current_user.email %> |
+                    <%= link("Logout", to: Routes.session_path(@conn, :delete),
+                      method: :delete) %>
+                  </p>
+                <% else %>
+                  <%= form_for @conn, Routes.session_path(@conn, :create),
+                          [class: "form-inline"], fn f -> %>
+                    <%= text_input f, :email, class: "form-control" %>
+                    <%= submit "Login", class: "btn btn-secondary" %>
+                  <% end %>
+                <% end %>
+              </div>
           </ul>
         </div>
       </nav>
