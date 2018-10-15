@@ -18,6 +18,7 @@ defmodule TaskTrackerWeb.Router do
 
     get "/", PageController, :index
     resources "/taskitems", TaskitemController
+    resources "/users", UserController
   end
 
   # Other scopes may use custom stacks.
