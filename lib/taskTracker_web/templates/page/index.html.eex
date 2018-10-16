@@ -1,6 +1,23 @@
 <div class="row">
   <div class="col-12">
     <h1>Task Tracker</h1>
-    <%= link "Register", to: Routes.user_path(@conn, :new) %>
+    <div class="col-4">
+      <%= if @current_user do %>
+        <p class="my-3">
+          User: <%= @current_user.email %> |
+          <%= link("Logout", to: Routes.session_path(@conn, :delete),
+            method: :delete) %>
+        </p>
+      <% else %>
+        <%= form_for @conn, Routes.session_path(@conn, :create),
+                [class: "form-inline"], fn f -> %>
+          <%= text_input f, :email, class: "form-control" %>
+          <%= submit "Login", class: "btn btn-secondary" %>
+        <% end %>
+      <% end %>
+    </div>
+    <div>
+    <p>Don't have an account yet? <%= link "Register", to: Routes.user_path(@conn, :new) %></p>
+    </div>
   </div>
 </div>
