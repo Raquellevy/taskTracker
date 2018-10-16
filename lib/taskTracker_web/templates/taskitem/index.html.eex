@@ -1,6 +1,6 @@
 <h1>Tasks</h1>
 
-<span><%= link "Create a new Task", to: Routes.taskitem_path(@conn, :new), class: "btn btn-primary" %></span>
+<span><%= link "Create Task", to: Routes.taskitem_path(@conn, :new), class: "btn btn-primary" %></span>
 
 <table>
   <thead>

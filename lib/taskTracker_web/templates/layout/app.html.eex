@@ -10,18 +10,27 @@
   <body>
      <div class="container">
       <nav class="navbar navbar-expand-sm navbar-light bg-white">
-        <div class="col-4">
-          <a class="navbar-brand" href="/..">Task Tracker</a>
+        <div class="col-12">
+          <a class="navbar-brand" href="/..">Home</a>
         </div>
 
        <%= if @current_user do %>
-        <div class="col-8">
           <ul class="navbar-nav mr-auto">
             <div>
               <a class="nav-link" href="/taskitems">Tasks</a>
             </div>
           </ul>
-        </div>
+      <% end %>
+
+      <%= if @current_user do %>
+        <ul class="navbar-nav mr-auto">
+          <div>
+          <a class="nav-link">
+            <%= link("Logout", to: Routes.session_path(@conn, :delete),
+              method: :delete) %>
+          </a>
+          </div>
+        </ul>
       <% end %>
 
       </nav>
