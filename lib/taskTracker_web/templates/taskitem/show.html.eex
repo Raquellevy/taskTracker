@@ -1,33 +1,29 @@
-<h1>Show Taskitem</h1>
+<div><%= link "<---", to: Routes.taskitem_path(@conn, :index) %></div>
+<div>
+<h1><%= @taskitem.title %></h1>
+<p><%= @taskitem.description %></p>
+</div>
 
-<ul>
+<div>
+  <strong>Assigned to:</strong>
+  <%= @taskitem.assignedto %>
+</div>
 
-  <li>
-    <strong>Title:</strong>
-    <%= @taskitem.title %>
-  </li>
-
-  <li>
-    <strong>Description:</strong>
-    <%= @taskitem.description %>
-  </li>
-
-  <li>
-    <strong>Complete:</strong>
-    <%= @taskitem.complete %>
-  </li>
-
-  <li>
+<div>
+  <span>
     <strong>Timespent:</strong>
     <%= @taskitem.timespent %>
-  </li>
+  </span>
+  <span>
+    <%= if @taskitem.complete do %>
+      <p>Task Complete!</p>
+    <% else %>
+      <p>Incomplete</p>
+    <% end %>
+  </span>
+</div>
 
-  <li>
-    <strong>Assignedto:</strong>
-    <%= @taskitem.assignedto %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: Routes.taskitem_path(@conn, :edit, @taskitem) %></span>
-<span><%= link "Back", to: Routes.taskitem_path(@conn, :index) %></span>
+<div>
+<span><%= link "Delete Task", to: Routes.taskitem_path(@conn, :delete, @taskitem), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger"%></span>
+<span><%= link "Edit Task", to: Routes.taskitem_path(@conn, :edit, @taskitem) %></span>
+</div>

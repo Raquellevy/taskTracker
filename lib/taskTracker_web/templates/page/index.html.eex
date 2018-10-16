@@ -13,11 +13,11 @@
                 [class: "form-inline"], fn f -> %>
           <%= text_input f, :email, class: "form-control" %>
           <%= submit "Login", class: "btn btn-secondary" %>
+          <p>Don't have an account yet? <%= link "Register", to: Routes.user_path(@conn, :new) %></p>
         <% end %>
       <% end %>
     </div>
     <div>
-    <p>Don't have an account yet? <%= link "Register", to: Routes.user_path(@conn, :new) %></p>
     </div>
   </div>
 </div>
