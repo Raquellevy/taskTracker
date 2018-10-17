@@ -5,7 +5,7 @@ defmodule TaskTracker.Users.User do
 
   schema "users" do
     field :email, :string
-
+    
     timestamps()
   end
 

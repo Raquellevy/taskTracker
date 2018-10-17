@@ -7,21 +7,11 @@
     <title>TaskTracker</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
   </head>
+
+
   <body>
      <div class="container">
       <nav class="navbar navbar-expand-sm navbar-light bg-white">
-        <div class="col-12">
-          <a class="navbar-brand" href="/..">Home</a>
-        </div>
-
-       <%= if @current_user do %>
-          <ul class="navbar-nav mr-auto">
-            <div>
-              <a class="nav-link" href="/taskitems">Tasks</a>
-            </div>
-          </ul>
-      <% end %>
-
       <%= if @current_user do %>
         <ul class="navbar-nav mr-auto">
           <div>
@@ -50,6 +40,7 @@
 
       <%= render @view_module, @view_template, assigns %>
     </div>
+
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

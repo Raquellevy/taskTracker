@@ -1,13 +1,13 @@
-<h1>Tasks</h1>
 
-<span><%= link "Create Task", to: Routes.taskitem_path(@conn, :new), class: "btn btn-primary" %></span>
+<div>
+<h1>My Tasks</h1>
+</div>
 
 <table>
   <thead>
     <tr>
       <th>Title</th>
-      <th>Assigned to</th>
-
+      <th></th>
       <th></th>
     </tr>
   </thead>
@@ -15,10 +15,39 @@
 <%= for taskitem <- @taskitems do %>
     <tr>
       <td><%= taskitem.title %></td>
-      <td><%= taskitem.assignedto %></td>
 
       <td>
+      <span><%= link "Log time", to: Routes.taskitem_path(@conn, :edit, taskitem) %></span>
+      </td>
+      <td>
         <%= link "View Task", to: Routes.taskitem_path(@conn, :show, taskitem), class: "btn btn-secondary" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<div>
+<h1>All Tasks</h1>
+<span><%= link "Create Task", to: Routes.taskitem_path(@conn, :new), class: "btn btn-primary" %></span>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for taskitem <- @taskitems do %>
+    <tr>
+      <td>
+        <%= link taskitem.title, to: Routes.taskitem_path(@conn, :show, taskitem), class: "btn btn-secondary" %>
+      </td>
+
+      <td>
+        <%= taskitem.description %>
       </td>
     </tr>
 <% end %>

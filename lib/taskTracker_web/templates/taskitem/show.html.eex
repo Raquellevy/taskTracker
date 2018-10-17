@@ -23,7 +23,9 @@
   </span>
 </div>
 
+
 <div>
-<span><%= link "Delete Task", to: Routes.taskitem_path(@conn, :delete, @taskitem), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger"%></span>
-<span><%= link "Edit Task", to: Routes.taskitem_path(@conn, :edit, @taskitem) %></span>
+<span><%= link "Edit", to: Routes.taskitem_path(@conn, :edit, @taskitem) %></span>
+|
+<span><%= link "Delete", to: Routes.taskitem_path(@conn, :delete, @taskitem), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger"%></span>
 </div>
