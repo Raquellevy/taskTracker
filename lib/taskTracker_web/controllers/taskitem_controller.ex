@@ -1,12 +1,18 @@
 defmodule TaskTrackerWeb.TaskitemController do
   use TaskTrackerWeb, :controller
+  import Ecto.Query, only: [from: 2]
 
   alias TaskTracker.Taskitems
   alias TaskTracker.Taskitems.Taskitem
+  alias TaskTracker.Users
+  alias TaskTracker.Repo
 
   def index(conn, _params) do
     taskitems = Taskitems.list_taskitems()
-    render(conn, "index.html", taskitems: taskitems)
+    current_user_id = conn.assigns[:current_user].id
+    query = from t in "taskitems",  where: t.user_id == (^current_user_id), select: t.title
+    mytasks = Repo.all(query)
+    render(conn, "index.html", taskitems: taskitems, mytasks: mytasks)
   end
 
   def new(conn, _params) do
@@ -15,6 +21,7 @@ defmodule TaskTrackerWeb.TaskitemController do
   end
 
   def create(conn, %{"taskitem" => taskitem_params}) do
+    users = Users.list_users()
     case Taskitems.create_taskitem(taskitem_params) do
       {:ok, taskitem} ->
         conn
@@ -22,7 +29,7 @@ defmodule TaskTrackerWeb.TaskitemController do
         |> redirect(to: Routes.taskitem_path(conn, :show, taskitem))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, users: users)
     end
   end
 
@@ -32,12 +39,14 @@ defmodule TaskTrackerWeb.TaskitemController do
   end
 
   def edit(conn, %{"id" => id}) do
+    users = Users.list_users()
     taskitem = Taskitems.get_taskitem!(id)
     changeset = Taskitems.change_taskitem(taskitem)
-    render(conn, "edit.html", taskitem: taskitem, changeset: changeset)
+    render(conn, "edit.html", taskitem: taskitem, changeset: changeset, users: users)
   end
 
   def update(conn, %{"id" => id, "taskitem" => taskitem_params}) do
+    users = Users.list_users()
     taskitem = Taskitems.get_taskitem!(id)
 
     case Taskitems.update_taskitem(taskitem, taskitem_params) do
@@ -47,7 +56,7 @@ defmodule TaskTrackerWeb.TaskitemController do
         |> redirect(to: Routes.taskitem_path(conn, :show, taskitem))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", taskitem: taskitem, changeset: changeset)
+        render(conn, "edit.html", taskitem: taskitem, changeset: changeset, users: users)
     end
   end
 

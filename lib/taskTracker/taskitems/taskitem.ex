@@ -4,11 +4,11 @@ defmodule TaskTracker.Taskitems.Taskitem do
 
 
   schema "taskitems" do
-    field :assignedto, :string
     field :complete, :boolean, default: false
     field :description, :string
     field :timespent, :integer
     field :title, :string
+    belongs_to :user, TaskTracker.Users.User
 
     timestamps()
   end
@@ -16,7 +16,7 @@ defmodule TaskTracker.Taskitems.Taskitem do
   @doc false
   def changeset(taskitem, attrs) do
     taskitem
-    |> cast(attrs, [:title, :description, :complete, :timespent, :assignedto])
+    |> cast(attrs, [:title, :description, :complete, :timespent, :user_id])
     |> validate_required([:title, :description])
   end
 end

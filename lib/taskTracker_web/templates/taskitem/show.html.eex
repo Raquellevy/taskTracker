@@ -6,7 +6,7 @@
 
 <div>
   <strong>Assigned to:</strong>
-  <%= @taskitem.assignedto %>
+  <%= @taskitem.user_id %>
 </div>
 
 <div>

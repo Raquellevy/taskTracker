@@ -12,7 +12,7 @@
     </tr>
   </thead>
   <tbody>
-<%= for taskitem <- @taskitems do %>
+<%= for taskitem <- @mytasks do %>
     <tr>
       <td><%= taskitem.title %></td>
 

@@ -18,15 +18,13 @@
   <%= error_tag f, :description %>
 <div>
 
-<% if @action == :edit do %>
 <div class="form-group">
   <%= label f, :complete %>
   <%= checkbox f, :complete %>
   <%= error_tag f, :complete %>
 <div>
-<% end %>
 
-<% if @action == :edit do %>
+<% if @action == "edit" do %>
 <div class="form-group">
   <%= label f, :timespent %>
   <%= number_input f, :timespent, class: "form-control", value: 0, step: 15, readonly: ""%>
@@ -34,13 +32,7 @@
 <div>
 <% end %>
 
-<% if @action == :edit do %>
-<div class="form-group">
-  <%= label f, "Assign a user by email" %>
-  <%= text_input f, :assignedto, class: "form-control" %>
-  <%= error_tag f, :assignedto %>
-<div>
-<% end %>
+
 
   <div>
     <%= submit "Save", class: "btn btn-primary" %>
