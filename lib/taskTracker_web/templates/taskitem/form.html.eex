@@ -18,19 +18,28 @@
   <%= error_tag f, :description %>
 <div>
 
+<%= if @edit do %>
 <div class="form-group">
   <%= label f, :complete %>
   <%= checkbox f, :complete %>
   <%= error_tag f, :complete %>
 <div>
+<% end %>
 
-<% if @action == "edit" do %>
+<%= if @edit and @taskitem.user_id == @current_user.id do %>
 <div class="form-group">
   <%= label f, :timespent %>
-  <%= number_input f, :timespent, class: "form-control", value: 0, step: 15, readonly: ""%>
+  <%= number_input f, :timespent, class: "form-control", value: 0, step: 15%>
   <%= error_tag f, :timespent %>
 <div>
 <% end %>
+
+<div class="form-group">
+  <%= label f, :user_id %>
+  Assign to: <%= select(f, :user_id, Enum.map(@users, (&{&1.email, &1.id})))%>
+  <%= error_tag f, :user_id %>
+<div>
+
 
 
 

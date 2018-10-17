@@ -5,19 +5,17 @@ defmodule TaskTrackerWeb.TaskitemController do
   alias TaskTracker.Taskitems
   alias TaskTracker.Taskitems.Taskitem
   alias TaskTracker.Users
-  alias TaskTracker.Repo
 
   def index(conn, _params) do
     taskitems = Taskitems.list_taskitems()
-    current_user_id = conn.assigns[:current_user].id
-    query = from t in "taskitems",  where: t.user_id == (^current_user_id), select: t.title
-    mytasks = Repo.all(query)
-    render(conn, "index.html", taskitems: taskitems, mytasks: mytasks)
+    users = Users.list_users()
+    render(conn, "index.html", taskitems: taskitems, users: users)
   end
 
   def new(conn, _params) do
+    users = Users.list_users()
     changeset = Taskitems.change_taskitem(%Taskitem{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, users: users)
   end
 
   def create(conn, %{"taskitem" => taskitem_params}) do
