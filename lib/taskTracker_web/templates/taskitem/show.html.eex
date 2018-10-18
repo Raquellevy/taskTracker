@@ -6,19 +6,27 @@
 
 <div>
   <strong>Assigned to:</strong>
-  <%= @taskitem.user_id %>
-</div>
+  <%= for u <- @users do %>
+    <%= if u.id == @taskitem.user_id do %>
+      <%= u.email %>
+    <% end %>
+  <% end %>
 
 <div>
   <span>
     <strong>Timespent:</strong>
-    <%= @taskitem.timespent %>
+    <%= div(@taskitem.timespent, 60) %>h 
+    <%= rem(@taskitem.timespent, 60) %>min
   </span>
   <span>
     <%= if @taskitem.complete do %>
-      <p>Task Complete!</p>
+      <div>
+        <strong>Task Complete!</strong>
+      </div>
     <% else %>
-      <p>Incomplete</p>
+      <div>
+        <strong>Incomplete</strong>
+      </div>
     <% end %>
   </span>
 </div>
@@ -29,3 +37,4 @@
 |
 <span><%= link "Delete", to: Routes.taskitem_path(@conn, :delete, @taskitem), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger"%></span>
 </div>
+

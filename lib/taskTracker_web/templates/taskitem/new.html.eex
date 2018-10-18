@@ -1,5 +1,4 @@
+<span><%= link "<---", to: Routes.taskitem_path(@conn, :index) %></span>
 <h1>New Task</h1>
 
 <%= render "form.html", Map.put(Map.put(assigns, :action, Routes.taskitem_path(@conn, :create)), :edit, false) %>
-
-<span><%= link "Back", to: Routes.taskitem_path(@conn, :index) %></span>

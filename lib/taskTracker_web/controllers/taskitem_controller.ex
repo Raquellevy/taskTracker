@@ -5,11 +5,14 @@ defmodule TaskTrackerWeb.TaskitemController do
   alias TaskTracker.Taskitems
   alias TaskTracker.Taskitems.Taskitem
   alias TaskTracker.Users
+  alias TaskTracker.Repo
 
   def index(conn, _params) do
     taskitems = Taskitems.list_taskitems()
     users = Users.list_users()
-    render(conn, "index.html", taskitems: taskitems, users: users)
+    user_id = conn.assigns[:current_user].id
+    mytasks = Repo.all from ti in Taskitem, where: ti.user_id == ^user_id 
+    render(conn, "index.html", taskitems: taskitems, mytasks: mytasks, users: users)
   end
 
   def new(conn, _params) do
@@ -32,8 +35,9 @@ defmodule TaskTrackerWeb.TaskitemController do
   end
 
   def show(conn, %{"id" => id}) do
+    users = Users.list_users()
     taskitem = Taskitems.get_taskitem!(id)
-    render(conn, "show.html", taskitem: taskitem)
+    render(conn, "show.html", taskitem: taskitem, users: users)
   end
 
   def edit(conn, %{"id" => id}) do
