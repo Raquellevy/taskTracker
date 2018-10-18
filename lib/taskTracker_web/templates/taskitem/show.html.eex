@@ -15,8 +15,12 @@
 <div>
   <span>
     <strong>Timespent:</strong>
-    <%= div(@taskitem.timespent, 60) %>h 
+    <%= if @taskitem.timespent do %> 
+    <%= div(@taskitem.timespent, 60) %>h
     <%= rem(@taskitem.timespent, 60) %>min
+    <% else %>
+      0h
+    <% end %>
   </span>
   <span>
     <%= if @taskitem.complete do %>
