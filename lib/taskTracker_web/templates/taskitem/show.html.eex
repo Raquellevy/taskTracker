@@ -1,8 +1,10 @@
 <div><%= link "<---", to: Routes.taskitem_path(@conn, :index) %></div>
 <div>
-<h1><%= @taskitem.title %></h1>
-<p><%= @taskitem.description %></p>
+<h2><%= @taskitem.title %></h2>
+<h3><%= @taskitem.description %></h3>
 </div>
+
+<p></p>
 
 <div>
   <strong>Assigned to:</strong>
@@ -11,9 +13,9 @@
       <%= u.email %>
     <% end %>
   <% end %>
+</div>
 
 <div>
-  <span>
     <strong>Timespent:</strong>
     <%= if @taskitem.timespent do %> 
     <%= div(@taskitem.timespent, 60) %>h
@@ -21,8 +23,9 @@
     <% else %>
       0h
     <% end %>
-  </span>
-  <span>
+</div>
+
+<div>
     <%= if @taskitem.complete do %>
       <div>
         <strong>Task Complete!</strong>
@@ -32,10 +35,9 @@
         <strong>Incomplete</strong>
       </div>
     <% end %>
-  </span>
 </div>
 
-
+<p></p>
 <div>
 <span><%= link "Edit", to: Routes.taskitem_path(@conn, :edit, @taskitem) %></span>
 |

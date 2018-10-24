@@ -6,33 +6,24 @@
     </div>
   <% end %>
 
-<%= if @edit and @taskitem.user_id == @current_user.id do %>
-<div class="form-group">
-  <%= label f, @taskitem.title %>
-</div>
-<% else %>
 <div class="form-group">
   <%= label f, :title %>
   <%= text_input f, :title, class: "form-control" %>
   <%= error_tag f, :title %>
 </div>
-<% end %>
 
-<%= if @edit and @taskitem.user_id == @current_user.id do %>
-<div class="form-group">
-  <%= @taskitem.description %>
-</div>
-<% else %>
 <div class="form-group">
   <%= label f, :description %>
   <%= textarea f, :description, class: "form-control" %>
   <%= error_tag f, :description %>
 <div>
-<% end %>
 
 <div class="form-group">
-  Assigned to: <%= select(f, :user_id, Enum.map(@users, (&{&1.email, &1.id})))%>
-  <%= error_tag f, :user_id %>
+  <%= if length(@underlings) == 0 do %>
+  <% else %>
+    Assigned to: <%= select(f, :user_id, Enum.map(@underlings, (&{&1.email, &1.id})))%>
+    <%= error_tag f, :user_id %>
+  <% end %>
 <div>
 
 <%= if @edit and @taskitem.user_id == @current_user.id do %>

@@ -4,8 +4,9 @@ defmodule TaskTracker.Users.User do
 
 
   schema "users" do
+    field :name, :string
     field :email, :string
-    
+    belongs_to(:manager, TaskTracker.Users.User)
     timestamps()
   end
 
@@ -14,7 +15,7 @@ defmodule TaskTracker.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email])
+    |> cast(attrs, [:email, :manager_id])
     |> validate_required([:email])
     |> unique_constraint(:email)
     |> validate_format(:email, ~r/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)

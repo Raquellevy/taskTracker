@@ -79,6 +79,8 @@ defmodule TaskTracker.Users do
     |> Repo.update()
   end
 
+  def show_managed_users
+
   @doc """
   Deletes a User.
 

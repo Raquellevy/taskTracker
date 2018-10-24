@@ -1,13 +1,43 @@
-<h1>Show User</h1>
+<p></p>
 
-<ul>
+<h2><%= @user.name%></h2>
+<p>
+  <div><%= @user.email%></div>
+  <%= if @user.manager_id == nil do %>
+    <p>Your manager: none</p>
+  <% else %>
+    <%= for user <- @users do %>
+      <%= if @user.manager_id == user.id do %>
+        <p>Your manager: <%= user.name %> (<%= user.email %>)</p>
+        <% end %>
+    <% end %>
+  <% end %>
 
-  <li>
-    <strong>Email:</strong>
-    <%= @user.email %>
-  </li>
+  <%= link("Edit Profile", to: Routes.user_path(@conn, :edit, @user)) %>
+</p>
 
-</ul>
+<p>________________________________________________________________________________________________</p>
 
-<span><%= link "Edit", to: Routes.user_path(@conn, :edit, @user) %></span>
-<span><%= link "Back", to: Routes.user_path(@conn, :index) %></span>
+<h2>Users You Manage</h2>
+<%= if length(@managed_users) == 0 do %>
+  <div> You do not manage anybody </div>
+<% else %>
+  <table>
+    <thead>
+      <tr>
+      <th>Name</th>
+      <th>Email Address</th>
+      <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for user <- @managed_users do %>
+      <tr>
+        <td> <%= user.name %></td>
+        <td> <%= user.email %></td>
+        <td> <%= link("Task Report", to: Routes.taskitem_path(@conn, :show_tasks)) %> </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

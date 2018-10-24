@@ -1,8 +1,11 @@
-
+<p></p>
 <div>
-<h1>My Tasks</h1>
+<h2>My Tasks</h2>
 </div>
 
+<%= if length(@mytasks) == 0 do %>
+<div> Not currently assigned to any tasks</div> 
+<% else %>
 <table>
   <thead>
     <tr>
@@ -38,10 +41,12 @@
     <% end %>
   </tbody>
 </table>
+<% end %>
 
+<p>_______________________________________________________________________________________________</p>
 <div>
-<h1>All Tasks</h1>
-<span><%= link "Create Task", to: Routes.taskitem_path(@conn, :new), class: "btn btn-primary" %></span>
+<h2>All Tasks</h2>
+<span><%= link "New Task", to: Routes.taskitem_path(@conn, :new), class: "btn btn-primary" %></span>
 </div>
 
 <table>

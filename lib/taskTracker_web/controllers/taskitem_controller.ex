@@ -5,6 +5,7 @@ defmodule TaskTrackerWeb.TaskitemController do
   alias TaskTracker.Taskitems
   alias TaskTracker.Taskitems.Taskitem
   alias TaskTracker.Users
+  alias TaskTracker.Users.User
   alias TaskTracker.Repo
 
   def index(conn, _params) do
@@ -12,17 +13,23 @@ defmodule TaskTrackerWeb.TaskitemController do
     users = Users.list_users()
     user_id = conn.assigns[:current_user].id
     mytasks = Repo.all from ti in Taskitem, where: ti.user_id == ^user_id 
-    render(conn, "index.html", taskitems: taskitems, mytasks: mytasks, users: users)
+    underlings = Repo.all from u in User, where: u.manager_id == ^user_id
+    render(conn, "index.html", taskitems: taskitems, mytasks: mytasks, users: users, underlings: underlings)
   end
 
   def new(conn, _params) do
     users = Users.list_users()
+    user_id = conn.assigns[:current_user].id
+    underlings = Repo.all from u in User, where: u.manager_id == ^user_id
     changeset = Taskitems.change_taskitem(%Taskitem{})
-    render(conn, "new.html", changeset: changeset, users: users)
+    render(conn, "new.html", changeset: changeset, users: users, underlings: underlings)
   end
 
   def create(conn, %{"taskitem" => taskitem_params}) do
     users = Users.list_users()
+    user_id = conn.assigns[:current_user].id
+    underlings = Repo.all from u in User, where: u.manager_id == ^user_id
+
     case Taskitems.create_taskitem(taskitem_params) do
       {:ok, taskitem} ->
         conn
@@ -30,7 +37,7 @@ defmodule TaskTrackerWeb.TaskitemController do
         |> redirect(to: Routes.taskitem_path(conn, :show, taskitem))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset, users: users)
+        render(conn, "new.html", changeset: changeset, users: users, underlings: underlings)
     end
   end
 
@@ -40,16 +47,26 @@ defmodule TaskTrackerWeb.TaskitemController do
     render(conn, "show.html", taskitem: taskitem, users: users)
   end
 
+  def show_tasks(conn, user) do
+    taskitems = Taskitems.list_taskitems()
+    render(conn, "show_tasks.html", taskitems: taskitems)
+  end
+
+
   def edit(conn, %{"id" => id}) do
     users = Users.list_users()
     taskitem = Taskitems.get_taskitem!(id)
     changeset = Taskitems.change_taskitem(taskitem)
-    render(conn, "edit.html", taskitem: taskitem, changeset: changeset, users: users)
+    user_id = conn.assigns[:current_user].id
+    underlings = Repo.all from u in User, where: u.manager_id == ^user_id
+    render(conn, "edit.html", taskitem: taskitem, changeset: changeset, users: users, underlings: underlings)
   end
 
   def update(conn, %{"id" => id, "taskitem" => taskitem_params}) do
     users = Users.list_users()
     taskitem = Taskitems.get_taskitem!(id)
+    user_id = conn.assigns[:current_user].id
+    underlings = Repo.all from u in User, where: u.manager_id == ^user_id
 
     case Taskitems.update_taskitem(taskitem, taskitem_params) do
       {:ok, taskitem} ->
@@ -58,7 +75,7 @@ defmodule TaskTrackerWeb.TaskitemController do
         |> redirect(to: Routes.taskitem_path(conn, :show, taskitem))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", taskitem: taskitem, changeset: changeset, users: users)
+        render(conn, "edit.html", taskitem: taskitem, changeset: changeset, users: users, underlings: underlings)
     end
   end
 

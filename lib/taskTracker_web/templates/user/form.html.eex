@@ -5,11 +5,33 @@
     </div>
   <% end %>
 
-  <%= label f, :email %>
+  <div class="form-group">
+  <%= label f, "Full Name" %>
+  <%= text_input f, :name %>
+  <%= error_tag f, :name %>
+  </div>
+
+  <div class="form-group">
+  <%= label f, "Email Address" %>
   <%= text_input f, :email %>
   <%= error_tag f, :email %>
-
-  <div>
-    <%= submit "Register" %>
   </div>
+
+  <div class="form-group">
+  <%= if length(@users) == 0 do %>
+  <% else %>
+    Direct Manager: <%= select(f, :manager_id, Enum.map(@users, (&{&1.name, &1.id})))%>
+    <%= error_tag f, :manger_id %>
+  <% end %>
+<div>
+
+  <%= if @edit do %>
+  <div>
+    <%= submit "Save" %>
+  </div>
+  <% else %>
+    <div>
+      <%= submit "Register" %>
+    </div>
+  <% end %>
 <% end %>

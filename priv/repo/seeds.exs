@@ -12,5 +12,9 @@
 alias TaskTracker.Repo
 alias TaskTracker.Users.User
 
-Repo.insert!(%User{email: "alice@example.com"})
-Repo.insert!(%User{email: "bob@example.com"})
+Repo.insert!(%User{name: "Alice Smith", email: "alice@example.com"})
+Repo.insert!(%User{name: "Bob Johnson", email: "bob@example.com", manager_id: 1})
+Repo.insert!(%User{name: "Raquel Levy", email: "raquel@example.com", manager_id: 2})
+Repo.insert!(%User{name: "Joe Annis", email: "joe@example.com", manager_id: 3})
+Repo.insert!(%User{name: "Tina Norani", email: "tina@example.com", manager_id: 3})
+Repo.insert!(%User{name: "Catu Berrreta", email: "catu@example.com", manager_id: 3})

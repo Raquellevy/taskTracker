@@ -1,7 +1,7 @@
 {application,taskTracker,
              [{applications,[kernel,stdlib,elixir,logger,runtime_tools,
                              gettext,jason,phoenix_pubsub,cowboy,phoenix_html,
-                             phoenix,phoenix_live_reload,postgrex,
+                             phoenix,phoenix_live_reload,postgrex,distillery,
                              phoenix_ecto]},
               {description,"taskTracker"},
               {modules,['Elixir.TaskTracker','Elixir.TaskTracker.Application',

@@ -13,14 +13,17 @@
      <div class="container">
       <nav class="navbar navbar-expand-sm navbar-light bg-white">
       <%= if @current_user do %>
+
+      <div class="col-8">
         <ul class="navbar-nav mr-auto">
-          <div>
-          <a class="nav-link">
+          <p class="my-3">
+            <%= link("My Profile", to: Routes.user_path(@conn, :show, @current_user)) %> |
+            <%= link("Tasks", to: Routes.taskitem_path(@conn, :index)) %> |
             <%= link("Logout", to: Routes.session_path(@conn, :delete),
               method: :delete) %>
-          </a>
-          </div>
+          </p>
         </ul>
+      </div>
       <% end %>
 
       </nav>
