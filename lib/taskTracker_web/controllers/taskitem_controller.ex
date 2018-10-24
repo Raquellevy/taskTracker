@@ -49,7 +49,7 @@ defmodule TaskTrackerWeb.TaskitemController do
 
   def show_tasks(conn, user) do
     taskitems = Taskitems.list_taskitems()
-    render(conn, "show_tasks.html", taskitems: taskitems)
+    render(conn, "show_tasks.html", taskitems: taskitems)  
   end
 
 
