@@ -35,7 +35,7 @@
       <tr>
         <td> <%= user.name %></td>
         <td> <%= user.email %></td>
-        <td> <%= link("Task Report", to: Routes.taskitem_path(@conn, :show_tasks)) %> </td>
+        <td> <%= link("Task Report", to: Routes.taskitem_path(@conn, :show_tasks, user)) %> </td>
       </tr>
       <% end %>
     </tbody>

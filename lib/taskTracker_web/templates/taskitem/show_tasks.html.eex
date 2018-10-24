@@ -1,36 +1,41 @@
 <p></p>
-<h1>Task Report for "NAME" </h1>
-<h3>email address</h3>
+<h1>Task Report for <%= @user.name %> </h1>
+<h3><%= @user.email %></h3>
 
-<p></p>
-<table>
-  <thead>
-    <tr>
-      <th>Task</th>
-      <th>Description</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= for taskitem <- @taskitems do %>
-    <tr>
-        <td>
-          <%= taskitem.title %>
-        </td>
+<p>_______________________________________________________________________________________________</p>
 
-        <td>
-          <%= taskitem.description %>
-        </td>
-
-        <td>
-          <%= if taskitem.complete do %>
-            Complete
-          <% else %>
-            Incomplete
-          <% end %>
-        </td>
-
+<%= if length(@usertasks) == 0 do %>
+    <div> Not currently assigned to any tasks </div>
+<% else %>
+    <table>
+    <thead>
+        <tr>
+        <th>Task</th>
+        <th>Description</th>
+        <th>Status</th>
         </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+        <%= for taskitem <- @usertasks do %>
+        <tr>
+            <td>
+            <%= taskitem.title %>
+            </td>
+
+            <td>
+            <%= taskitem.description %>
+            </td>
+
+            <td>
+            <%= if taskitem.complete do %>
+                Complete
+            <% else %>
+                Incomplete
+            <% end %>
+            </td>
+
+            </tr>
+        <% end %>
+    </tbody>
+    </table>
+<% end %>

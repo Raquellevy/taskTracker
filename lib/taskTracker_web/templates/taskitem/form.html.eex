@@ -27,11 +27,10 @@
 <div>
 
 <%= if @edit and @taskitem.user_id == @current_user.id do %>
-<div class="form-group">
-  <%= label f, :timespent %>
-  <%= number_input f, :timespent, class: "form-control", value: @taskitem.timespent, step: 15%>
-  <%= error_tag f, :timespent %>
-<div>
+  <!-- in the product field list -->
+  <strong>Log time:</strong>
+  <div><button id="rating-button" class="btn btn-secondary">Start Working</button></div>
+</div>
 <% end %>
 
 <%= if @edit do %>

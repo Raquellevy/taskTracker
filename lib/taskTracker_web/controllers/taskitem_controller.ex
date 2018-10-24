@@ -47,9 +47,10 @@ defmodule TaskTrackerWeb.TaskitemController do
     render(conn, "show.html", taskitem: taskitem, users: users)
   end
 
-  def show_tasks(conn, user) do
-    taskitems = Taskitems.list_taskitems()
-    render(conn, "show_tasks.html", taskitems: taskitems)  
+  def show_tasks(conn, %{"id" => id}) do
+    user = Users.get_user!(id)
+    usertasks = Repo.all from ti in Taskitem, where: ti.user_id == ^id 
+    render(conn, "show_tasks.html", usertasks: usertasks, user: user)  
   end
 
 
