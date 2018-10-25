@@ -1,3 +1,73 @@
+<%= if @edit and @taskitem.user_id == @current_user.id do %>
+<p>_______________________________________________________________________________________________</p>
+  
+  <h3><strong>Edit Time Logs</strong></h3>
+    <table id="timeblock-table">
+      <thead>
+        <tr>
+          <th>Start Time</th>
+          <th>Stop Time</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= for timeblock <- @taskitem.timeblock do %>
+          <tr>
+            <td id="<%= timeblock.id %>-start">
+              <input id="<%= timeblock.id %>-startinput" type="datetime-local" style="display:none" novalidate>
+              <div id="<%= timeblock.id %>-starttime"><%= timeblock.start_time %></div>
+            </td>
+
+            <td id="<%= timeblock.id %>-end">
+              <input id="<%= timeblock.id %>-endinput" type="datetime-local" style="display:none" novalidate>
+              <div id="<%= timeblock.id %>-endtime"><%= timeblock.end_time %></div>
+            </td>
+
+            <td>
+              <button id = "<%= timeblock.id %>-editbutton"
+                      data-timeblock-id="<%= timeblock.id %>"
+                      data-start-time="<%= timeblock.start_time %>"
+                      data-end-time="<%= timeblock.end_time %>"
+                      onClick=window.editTimeBlock(this)>Edit</button>
+
+              <button id = "<%= timeblock.id %>-savebutton"
+                      data-timeblock-id="<%= timeblock.id %>"
+                      data-taskitem-id="<%= @taskitem.id %>"
+                      style="display:none"
+                      onClick=window.saveTimeBlock(this)>Save</button>
+            </td>
+
+            <td>
+              <button data-timeblock-id="<%= timeblock.id %>"
+                      onClick=window.deleteTimeBlock(this)>Delete</button>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+<div>
+  <span>Start time:<input id="startnew-timeblock" type="datetime-local" novalidate></span>
+  <span>End time:<input id="endnew-timeblock" type="datetime-local" novalidate></span>
+</div>
+
+<button id="new-timeblock-button"
+        data-taskitem-id="<%= @taskitem.id %>"
+        onClick=window.createTimeBlock(this)>Add timeblock</button>
+
+  <p></p>
+  <strong>Log time:</strong>
+  <div>
+    <button id="start-timeblock-button">Start Tracking Time</button>
+    <button id="stop-timeblock-button"
+            style="display:none"
+            data-taskitem-id="<%= @taskitem.id %>">Stop Tracking Time
+    </button>
+  </div>
+<% end %>
+
+<p>_______________________________________________________________________________________________</p>
 <%= form_for @changeset, @action, fn f -> %>
 
   <%= if @changeset.action do %>
@@ -36,18 +106,5 @@
 
   <div class="form-group">
     <%= submit "Save", class: "btn btn-primary" %>
-  </div>
-<% end %>
-
-
-<%= if @edit and @taskitem.user_id == @current_user.id do %>
-  <!-- in the product field list -->
-  <strong>Log time:</strong>
-  <div>
-    <button id="start-timeblock-button">Start Tracking Time</button>
-    <button id="stop-timeblock-button"
-            style="display:none"
-            data-taskitem-id="<%= @taskitem.id %>">Stop Tracking Time
-    </button>
   </div>
 <% end %>

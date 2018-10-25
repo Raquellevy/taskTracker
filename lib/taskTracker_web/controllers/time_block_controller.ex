@@ -25,7 +25,7 @@ defmodule TaskTrackerWeb.TimeBlockController do
     render(conn, "show.json", time_block: time_block)
   end
 
-  def update(conn, %{"id" => id, "time_block" => time_block_params}) do
+  def update(conn, %{"id" => id, "timeblock" => time_block_params}) do
     time_block = TimeBlocks.get_time_block!(id)
 
     with {:ok, %TimeBlock{} = time_block} <- TimeBlocks.update_time_block(time_block, time_block_params) do

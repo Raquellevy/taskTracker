@@ -18,10 +18,108 @@ import "phoenix_html"
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
 
+window.createTimeBlock = (ev) => {
+    let taskitem_id = $(ev).data('taskitem-id');
+    let starttime = $("#startnew-timeblock").val();
+    let endtime = $("#endnew-timeblock").val();
+
+    if(starttime != "" && endtime != "") {
+    let text = JSON.stringify({
+        timeblock: {
+            taskitem_id: taskitem_id,
+            start_time: new Date(starttime),
+            end_time: new Date(endtime),
+        },
+        });
+
+    $.ajax("/ajax/timeblocks", {
+        method: "post",
+        dataType: "json",
+        contentType: "application/json; charset=UTF-8",
+        data: text,
+        success: (resp) => {
+            location.reload();
+        },
+    });
+    } else {
+        location.reload();
+    }
+
+}
+window.deleteTimeBlock = (ev) => {
+    let timeblock_id = $(ev).data('timeblock-id');
+    
+    console.log("deleting timeblock")
+    $.ajax("/ajax/timeblocks/" + timeblock_id, {
+    method: "delete",
+    dataType: "json",
+    contentType: "application/json; charset=UTF-8",
+    success: (resp) => {
+        location.reload();
+    },
+    });
+}
+
+window.editTimeBlock = (ev) => {
+    let savebutton_id = $(ev).data('timeblock-id') + "-savebutton";
+    let editbutton_id = $(ev).data('timeblock-id') + "-editbutton";
+    let td_start_id = $(ev).data('timeblock-id') + "-start";
+    let td_end_id = $(ev).data('timeblock-id') + "-end";
+
+    $("#" + savebutton_id).show();
+    $("#" + editbutton_id).hide();
+
+    $("#" + td_start_id + "input").show();
+    $("#" + td_end_id + "input").show();
+    $("#" + td_start_id + "time").hide();
+    $("#" + td_end_id + "time").hide();
+}
+
+window.saveTimeBlock = (ev) => {
+        
+    let taskitem_id = $(ev).data('taskitem-id');
+
+    let timeblock_id = $(ev).data('timeblock-id');
+
+    let savebutton_id = $(ev).data('timeblock-id') + "-savebutton";
+    let editbutton_id = $(ev).data('timeblock-id') + "-editbutton";
+
+    let td_start_id = $(ev).data('timeblock-id') + "-start";
+    let td_end_id = $(ev).data('timeblock-id') + "-end";
+    let newStart = $("#" + td_start_id + "input").val();
+    let newEnd = $("#" + td_end_id + "input").val();
+    
+    if(newStart != "" && newEnd != "") {
+        $("#" + savebutton_id).hide();
+        $("#" + editbutton_id).show();
+
+        let text = JSON.stringify({
+            timeblock: {
+                taskitem_id: taskitem_id,
+                start_time: new Date(newStart),
+                end_time: new Date(newEnd),
+            },
+            });
+    
+        $.ajax("/ajax/timeblocks/"+ timeblock_id, {
+            method: "put",
+            dataType: "json",
+            contentType: "application/json; charset=UTF-8",
+            data: text,
+            success: (resp) => {
+                location.reload();
+            },
+        });
+    } else {
+        location.reload();
+    }
+}
+
 var starttime;
 $(function () {
     let startbutton = $('#start-timeblock-button');
     let stopbutton = $('#stop-timeblock-button');
+
     stopbutton.hide();
 
     startbutton.click((ev) => {
@@ -50,10 +148,9 @@ $(function () {
         contentType: "application/json; charset=UTF-8",
         data: text,
         success: (resp) => {
-            $('#timeblock-form').text(`(start time: ${resp.data.starttime})`);
+            location.reload();
         },
         });
     });
-
 
 });
