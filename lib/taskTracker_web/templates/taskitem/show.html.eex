@@ -4,8 +4,6 @@
 <h3><%= @taskitem.description %></h3>
 </div>
 
-<p></p>
-
 <div>
   <strong>Assigned to:</strong>
   <%= for u <- @users do %>
@@ -13,16 +11,6 @@
       <%= u.email %>
     <% end %>
   <% end %>
-</div>
-
-<div>
-    <strong>Timespent:</strong>
-    <%= if @taskitem.timespent do %> 
-    <%= div(@taskitem.timespent, 60) %>h
-    <%= rem(@taskitem.timespent, 60) %>min
-    <% else %>
-      0h
-    <% end %>
 </div>
 
 <div>
@@ -35,6 +23,32 @@
         <strong>Incomplete</strong>
       </div>
     <% end %>
+</div>
+<p></p>
+
+<div>
+    <strong>Time logged:</strong>
+    <table>
+      <thead>
+        <tr>
+          <th>Start Time</th>
+          <th>Stop Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= for timeblock <- @taskitem.timeblock do %>
+          <tr>
+            <td>
+              <%= timeblock.start_time %>
+            </td>
+
+            <td>
+              <%= timeblock.end_time %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 </div>
 
 <p></p>

@@ -17,3 +17,43 @@ import "phoenix_html"
 //
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
+
+var starttime;
+$(function () {
+    let startbutton = $('#start-timeblock-button');
+    let stopbutton = $('#stop-timeblock-button');
+    stopbutton.hide();
+
+    startbutton.click((ev) => {
+      starttime = new Date();
+      startbutton.hide();
+      stopbutton.show();
+    });
+    
+    stopbutton.click((ev) => {
+        startbutton.show();
+        stopbutton.hide();
+        let endtime = new Date();
+        let taskitem_id = $(ev.target).data('taskitem-id');
+
+        let text = JSON.stringify({
+        timeblock: {
+            taskitem_id: taskitem_id,
+            start_time: starttime,
+            end_time: endtime,
+        },
+        });
+
+        $.ajax("/ajax/timeblocks", {
+        method: "post",
+        dataType: "json",
+        contentType: "application/json; charset=UTF-8",
+        data: text,
+        success: (resp) => {
+            $('#timeblock-form').text(`(start time: ${resp.data.starttime})`);
+        },
+        });
+    });
+
+
+});

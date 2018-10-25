@@ -35,7 +35,8 @@ defmodule TaskTracker.Taskitems do
       ** (Ecto.NoResultsError)
 
   """
-  def get_taskitem!(id), do: Repo.get!(Taskitem, id)
+  def get_taskitem!(id), do: Repo.get!(Taskitem, id) |> Repo.preload(:timeblock)
+
 
   @doc """
   Creates a taskitem.
