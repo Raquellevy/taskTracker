@@ -55,4 +55,18 @@ Task List Design
 - Edit link allows for editing title/description
 
 
+Manager Design
+- Add a manager_id to the User resource which references the user resource
+- Users are forced to select a manager, but can make themselves their own manager if they do not report to anyone
+- The table of "underlings" shows a users' name, email, and links to a task report which shows the users tasks and their status
+
+
+Time Logging
+- Adding timeblocks, post to ajax timeblocks resource
+- Editing/deleting timeblocks: add a callback for the button and delete/edit with a delete/put request then reload the table accordingly to reflect the change
+- For time tracking
+    - When start is pressed then store the start time in a JS variable, hide the start button and show the stop button
+    - When stop is clicked, post to ajax timeblocks resource with the saved start time and the new end time then reload the table to show the new timeblock
+
+
 
